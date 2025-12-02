@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>My Items</h2>
+<a href="{% url 'logout' %}">Logout</a> |
+<a href="{% url 'create' %}">Create Item</a>
+
+<ul>
+    {% for item in items %}
+        <li>
+            <strong>{{ item.title }}</strong> - {{ item.description }}
+            <a href="{% url 'item_update' item.pk %}">Edit</a>
+            <a href="{% url 'item_delete' item.pk %}">Delete</a>
+        </li>
+    {% empty %}
+        <li>No items yet.</li>
+    {% endfor %}
+</ul>
+
+</body>
+</html>
