@@ -24,6 +24,8 @@ urlpatterns = [
     path('login/', LoginView.as_view(), name='login'),
     path('logout/',LogoutView.as_view(),name="logout"),
     path('create/',ItemCreateView.as_view(),name="create"),
-    path('list/',ItemListView.as_view(),name="list_item")
+    path('list/',ItemListView.as_view(),name="list_item"),
+    path('update/',ItemUpdateView.as_view(),name="update"),
+    path('delete/',ItemDeleteView.as_view(),name="delete"),
 
 ]

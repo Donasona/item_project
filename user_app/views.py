@@ -65,16 +65,24 @@ class ItemUpdateView(View):
         if item.user != request.user:
             return redirect("list_item")
         form = Formitem(instance=item)
-        return render(request, "create_form.html", {"form": form})
+        return render(request, "update_form.html", {"form": form})
     
-     def post(self, request, pk):
-        item = get_object_or_404(Item, pk=pk)
+    def post(self, request,**kwargs):
+        item = kwargs.get("pk")
         if item.user != request.user:
-            return redirect("item_list")
-
-        form = ItemForm(request.POST, instance=item)
+            return redirect("list_item")
+        form = Formitem(request.POST, instance=item)
         if form.is_valid():
             form.save()
-            return redirect("item_list")
+            return redirect("list_item")
+        return render(request, "update_form.html", {"form": form})
+    
+# delete    
 
-        return render(request, "item_form.html", {"form": form})
+class ItemDeleteView(View):
+    def get(self, request, **kwargs):
+        item = kwargs.get("pk")
+        if item.user != request.user:
+            return redirect("list_item")
+        item.delete()
+        return redirect("list_item")
