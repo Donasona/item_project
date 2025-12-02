@@ -3,6 +3,7 @@ from django.shortcuts import render,redirect
 # Create your views here.
 from django.views.generic import View
 from user_app.forms import*
+from user_app.models import Item
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login,logout
 
@@ -61,14 +62,16 @@ class ItemListView(View):
 
 class ItemUpdateView(View):
     def get(self, request,**kwargs):
-        item = kwargs.get("pk")
+        update = kwargs.get("pk")
+        item = Item.objects.get(id = update)
         if item.user != request.user:
             return redirect("list_item")
         form = Formitem(instance=item)
         return render(request, "update_form.html", {"form": form})
     
     def post(self, request,**kwargs):
-        item = kwargs.get("pk")
+        update = kwargs.get("pk")
+        item = Item.objects.get(id = update)
         if item.user != request.user:
             return redirect("list_item")
         form = Formitem(request.POST, instance=item)
@@ -81,7 +84,8 @@ class ItemUpdateView(View):
 
 class ItemDeleteView(View):
     def get(self, request, **kwargs):
-        item = kwargs.get("pk")
+        delete = kwargs.get("pk")
+        item = Item.objects.get(id = delete)
         if item.user != request.user:
             return redirect("list_item")
         item.delete()
