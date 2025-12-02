@@ -27,5 +27,4 @@ urlpatterns = [
     path('list/',ItemListView.as_view(),name="list_item"),
     path('update/<int:pk>',ItemUpdateView.as_view(),name="update"),
     path('delete/<int:pk>',ItemDeleteView.as_view(),name="delete"),
-
 ]

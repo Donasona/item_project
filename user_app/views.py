@@ -17,7 +17,7 @@ class Register_view(View):
         if form.is_valid():
             user = form.save()
             login(request, user)
-        return render(request, "register.html", {"form": form})
+        return render(request, "list_item", {"form": form})
     
 class LoginView(View):
     def get(self, request):
@@ -30,7 +30,7 @@ class LoginView(View):
             user = form.get_user()
             login(request, user)
             return redirect("list_item")
-        return render(request, "list_item.html", {"form": form})
+        return render(request, "login.html", {"form": form})
     
 class LogoutView(View):
     def get(self, request):
@@ -41,10 +41,14 @@ class LogoutView(View):
 # create
 class ItemCreateView(View):
     def get(self, request):
+        if not request.user.is_authenticated:
+            return redirect("login")
         form = Formitem()       
         return render(request, "create_form.html", {"form": form})    
     
     def post(self, request):
+        if not request.user.is_authenticated:
+            return redirect("login") 
         form = Formitem(request.POST)
         if form.is_valid():
              item = form.save(commit=False)
@@ -57,8 +61,11 @@ class ItemCreateView(View):
 
 class ItemListView(View):
     def get(self, request):
-        items = Item.objects.filter(user=request.user)
-        return render(request, "list_item.html", {"items": items})
+        if request.user.is_authenticated:
+            items = Item.objects.filter(user=request.user)
+            return render(request, "list_item.html", {"items": items})
+        else:
+            return redirect("login")
 
 # update
 
