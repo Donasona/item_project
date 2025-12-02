@@ -19,7 +19,13 @@ class Register_view(View):
         return render(request, "register.html", {"form": form})
     
 class LoginView(View):
-
     def get(self, request):
         form = AuthenticationForm()
         return render(request,"login.html", {'form': form})
+    
+    def post(self, request):
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+        return render(request,"register.html", {'form': form})
