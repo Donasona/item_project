@@ -4,7 +4,6 @@ from django.shortcuts import render,redirect
 from django.views.generic import View
 from user_app.forms import*
 from user_app.models import Item
-# from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate,login,logout
 
 class Register_view(View):
@@ -16,7 +15,9 @@ class Register_view(View):
         form = RegisterForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
-            login(request, user)
+            user.set_password(form.cleaned_data['password'])
+            user.save()
+            return redirect("login")
         return render(request, "list_item", {"form": form})
     
 class LoginView(View):
