@@ -64,3 +64,17 @@ class ItemUpdateView(View):
         item = kwargs.get("pk")
         if item.user != request.user:
             return redirect("list_item")
+        form = Formitem(instance=item)
+        return render(request, "create_form.html", {"form": form})
+    
+     def post(self, request, pk):
+        item = get_object_or_404(Item, pk=pk)
+        if item.user != request.user:
+            return redirect("item_list")
+
+        form = ItemForm(request.POST, instance=item)
+        if form.is_valid():
+            form.save()
+            return redirect("item_list")
+
+        return render(request, "item_form.html", {"form": form})
