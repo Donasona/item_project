@@ -29,7 +29,8 @@ class LoginView(View):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-        return render(request, "register.html", {"form": form})
+            return redirect("list_item")
+        return render(request, "list_item.html", {"form": form})
     
 class LogoutView(View):
     def get(self, request):
@@ -40,7 +41,7 @@ class LogoutView(View):
 # create
 class ItemCreateView(View):
     def get(self, request):
-        form = Formitem()
+        form = Formitem()       
         return render(request, "create_form.html", {"form": form})    
     
     def post(self, request):
@@ -49,6 +50,7 @@ class ItemCreateView(View):
              item = form.save(commit=False)
              item.user = request.user
              item.save()
+             return redirect("list_item")
         return render(request, "create_form.html", {"form": form})
     
 # list    
