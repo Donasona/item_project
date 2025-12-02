@@ -22,4 +22,4 @@ class LoginView(View):
 
     def get(self, request):
         form = AuthenticationForm()
-        return render(request, self.template_name, {'form': form})
+        return render(request,"login.html", {'form': form})
