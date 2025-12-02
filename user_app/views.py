@@ -4,8 +4,8 @@ from django.shortcuts import render,redirect
 from django.views.generic import View
 from user_app.forms import*
 from user_app.models import Item
-from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import login,logout
+# from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import authenticate,login,logout
 
 class Register_view(View):
     def get(self,request):
@@ -15,20 +15,22 @@ class Register_view(View):
     def post(self, request):
         form = RegisterForm(request.POST)
         if form.is_valid():
-            user = form.save()
+            user = form.save(commit=False)
             login(request, user)
         return render(request, "list_item", {"form": form})
     
 class LoginView(View):
     def get(self, request):
-        form = AuthenticationForm()
+        form = Loginform()
         return render(request, "login.html", {"form": form})
 
     def post(self, request):
-        form = AuthenticationForm(request, data=request.POST)
+        form = Loginform(request.POST)
         if form.is_valid():
-            user = form.get_user()
-            login(request, user)
+            user=authenticate(username = form.cleaned_data['username'],
+                              password = form.cleaned_data['password'])
+            if user:
+               login(request, user)
             return redirect("list_item")
         return render(request, "login.html", {"form": form})
     
@@ -61,12 +63,11 @@ class ItemCreateView(View):
 
 class ItemListView(View):
     def get(self, request):
-        if request.user.is_authenticated:
-            items = Item.objects.filter(user=request.user)
-            return render(request, "list_item.html", {"items": items})
-        else:
+        if not request.user.is_authenticated:
             return redirect("login")
-
+        items = Item.objects.filter(user=request.user)
+        return render(request, "list_item.html", {"items": items})
+       
 # update
 
 class ItemUpdateView(View):
