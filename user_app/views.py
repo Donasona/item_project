@@ -41,6 +41,7 @@ class LogoutView(View):
         return redirect("login")    
     
     # items(CRUD)
+    
 # create
 class CreateView(View):
     def get(self, request):
