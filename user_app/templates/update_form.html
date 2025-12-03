@@ -55,10 +55,18 @@
 <div class="update-card">
     <h2>Update Item</h2>
     <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-save mt-2">Save Changes</button>
-    </form>
+    {% csrf_token %}
+    <div class="mb-3">
+        <label>Title</label>
+        <input type="text" name="title" class="form-control" value="{{ item.title }}">
+    </div>
+    <div class="mb-3">
+        <label>Description</label>
+        <textarea name="description" class="form-control">{{ item.description }}</textarea>
+    </div>
+    <button type="submit" class="btn btn-save mt-2">Save Changes</button>
+</form>
+
 </div>
 
 </body>

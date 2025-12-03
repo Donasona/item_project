@@ -27,4 +27,6 @@ urlpatterns = [
     path('list/',ListView.as_view(),name="list_item"),
     path('update/<int:pk>',UpdateView.as_view(),name="update"),
     path('delete/<int:pk>',DeleteView.as_view(),name="delete"),
+    path("",Baseview.as_view(),name="home"),
+
 ]

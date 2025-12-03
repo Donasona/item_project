@@ -41,7 +41,7 @@ class LogoutView(View):
         return redirect("login")    
     
     # items(CRUD)
-    
+
 # create
 class CreateView(View):
     def get(self, request):
@@ -100,3 +100,9 @@ class DeleteView(View):
             return redirect("list_item")
         item.delete()
         return redirect("list_item")
+
+# base 
+
+class Baseview(View):
+    def get(self,request):
+        return render(request,"base.html")
