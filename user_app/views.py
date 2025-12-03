@@ -38,7 +38,7 @@ class LoginView(View):
 class LogoutView(View):
     def get(self, request):
         logout(request)
-        return redirect("login")    
+        return redirect("home")    
     
     # items(CRUD)
 
@@ -89,6 +89,7 @@ class UpdateView(View):
         item.description = request.POST.get("description")
         item.save()
         return redirect("list_item")
+    
     
 # delete    
 
