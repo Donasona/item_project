@@ -20,11 +20,11 @@ from user_app.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('reg/',Register_view.as_view(),name="register"),
+    path('reg/',Registerview.as_view(),name="register"),
     path('login/', LoginView.as_view(), name='login'),
     path('logout/',LogoutView.as_view(),name="logout"),
-    path('create/',ItemCreateView.as_view(),name="create"),
-    path('list/',ItemListView.as_view(),name="list_item"),
-    path('update/<int:pk>',ItemUpdateView.as_view(),name="update"),
-    path('delete/<int:pk>',ItemDeleteView.as_view(),name="delete"),
+    path('create/',CreateView.as_view(),name="create"),
+    path('list/',ListView.as_view(),name="list_item"),
+    path('update/<int:pk>',UpdateView.as_view(),name="update"),
+    path('delete/<int:pk>',DeleteView.as_view(),name="delete"),
 ]

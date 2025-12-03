@@ -6,7 +6,7 @@ from user_app.forms import*
 from user_app.models import Item
 from django.contrib.auth import authenticate,login,logout
 
-class Register_view(View):
+class Registerview(View):
     def get(self,request):
         form = RegisterForm()
         return render(request,"register.html",{"form":form})
@@ -42,7 +42,7 @@ class LogoutView(View):
     
     # items(CRUD)
 # create
-class ItemCreateView(View):
+class CreateView(View):
     def get(self, request):
         if not request.user.is_authenticated:
             return redirect("login")
@@ -62,7 +62,7 @@ class ItemCreateView(View):
     
 # list    
 
-class ItemListView(View):
+class ListView(View):
     def get(self, request):
         if not request.user.is_authenticated:
             return redirect("login")
@@ -71,7 +71,7 @@ class ItemListView(View):
        
 # update
 
-class ItemUpdateView(View):
+class UpdateView(View):
     def get(self, request,**kwargs):
         update = kwargs.get("pk")
         item = Item.objects.get(id = update)
@@ -91,7 +91,7 @@ class ItemUpdateView(View):
     
 # delete    
 
-class ItemDeleteView(View):
+class DeleteView(View):
     def get(self, request, **kwargs):
         delete = kwargs.get("pk")
         item = Item.objects.get(id = delete)
