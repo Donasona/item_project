@@ -14,6 +14,6 @@ class RegisterForm(forms.ModelForm):
         model = User
         fields = ['username','email', 'password']
 
-class Loginform(forms.Form):
-    username = forms.CharField(max_length=20)
-    password = forms.CharField()
+# class Loginform(forms.Form):
+#     username = forms.CharField(max_length=20)
+#     password = forms.CharField()
