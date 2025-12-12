@@ -104,6 +104,6 @@ class DeleteView(View):
 
 # base 
 
-# class Baseview(View):
-#     def get(self,request):
-#         return render(request,"base.html")
+class Baseview(View):
+    def get(self,request):
+        return render(request,"base.html")
